@@ -194,7 +194,7 @@ def _release_from_redhat_release(fn):
 
     with open(fn) as f:
         try:
-            relstr = f.readline().strip()
+            relstr = f.readline(5_000_000).strip()
         except (OSError, AttributeError):
             relstr = ""
 
