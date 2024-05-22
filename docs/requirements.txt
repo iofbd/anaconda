@@ -1,3 +1,4 @@
 # Declare Python requirements required to build your docs.
 sphinx>=4.2.0
 sphinx_rtd_theme>=1.0.0
+requests>=2.32.0 # not directly required, pinned by Snyk to avoid a vulnerability
