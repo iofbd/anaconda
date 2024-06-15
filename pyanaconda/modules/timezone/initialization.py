@@ -27,6 +27,8 @@ from pyanaconda.modules.common.task import Task
 from pyanaconda.modules.common.util import is_module_available
 
 from pyanaconda.anaconda_loggers import get_module_logger
+from security import safe_requests
+
 log = get_module_logger(__name__)
 
 
@@ -91,8 +93,7 @@ class GeolocationTask(Task):
         """
         try:
             log.info("Geoloc: querying the API")
-            reply = requests.get(
-                url,
+            reply = safe_requests.get(url,
                 timeout=NETWORK_CONNECTION_TIMEOUT,
                 verify=True
             )
