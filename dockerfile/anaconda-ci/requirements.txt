@@ -20,3 +20,4 @@ astroid == 3.1.0
 
 # ruff for fast linting
 ruff == 0.1.14
+zipp>=3.19.1 # not directly required, pinned by Snyk to avoid a vulnerability
