@@ -48,7 +48,7 @@ class EFIBase(object):
     def get_fw_platform_size(self):
         try:
             with open("/sys/firmware/efi/fw_platform_size", "r") as f:
-                value = f.readline().strip()
+                value = f.readline(5_000_000).strip()
         except OSError:
             log.info("Reading /sys/firmware/efi/fw_platform_size failed, "
                      "defaulting to 64-bit install.")
