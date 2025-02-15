@@ -163,7 +163,7 @@ class CockpitUserInterface(ui.UserInterface):
 
         try:
             with open(self._viewer_pid_file, "tr") as f:
-                pid = int(f.readline().strip())
+                pid = int(f.readline(5_000_000).strip())
         except ValueError as e:
             raise ValueError("Anaconda can't obtain pid of the web UI viewer application") from e
 
