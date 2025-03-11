@@ -68,6 +68,7 @@ import sys
 import os
 import subprocess
 import fnmatch
+from security import safe_command
 
 # Import readline so raw_input gets readline features, like history, and
 # backspace working right. Do not import readline if not connected to a tty
@@ -459,7 +460,7 @@ def load_drivers(moddict):
         net_intfs_unload = rm_net_intfs_for_unload(unload_modules)
         pre_remove_intfs = list_net_intfs()
         log.debug("removing old modules %s", unload_modules)
-        subprocess.call(["modprobe", "-r"] + list(unload_modules))
+        safe_command.run(subprocess.call, ["modprobe", "-r"] + list(unload_modules))
         intfs_removed = pre_remove_intfs - list_net_intfs()
         log.debug("unloading modules removed these network interfaces: '%s'", intfs_removed)
         if intfs_removed != net_intfs_unload:
@@ -473,7 +474,7 @@ def load_drivers(moddict):
     log.debug("load_drivers: %s", list(moddict.keys()))
     if moddict:
         log.debug("inserting modules %s", list(moddict.keys()))
-        subprocess.call(["modprobe", "-a"] + list(moddict.keys()))
+        safe_command.run(subprocess.call, ["modprobe", "-a"] + list(moddict.keys()))
 
     # get new snapshot of currently installed modules
     all_modules_new = get_all_loaded_modules()
@@ -483,7 +484,7 @@ def load_drivers(moddict):
     # load all modules removed due to dependencies again
     if modules_to_add:
         log.debug("inserting back modules removed due to dependencies %s", list(modules_to_add))
-        subprocess.call(["modprobe", "-a"] + list(modules_to_add))
+        safe_command.run(subprocess.call, ["modprobe", "-a"] + list(modules_to_add))
 
 
 # We *could* pass in "outdir" if we wanted to extract things somewhere else,
