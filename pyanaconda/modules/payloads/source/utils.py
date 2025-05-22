@@ -75,9 +75,9 @@ def is_valid_install_disk(tree_dir):
     """
     try:
         with open(join_paths(tree_dir, ".discinfo"), "r") as f:
-            f.readline()  # throw away timestamp
-            f.readline()  # throw away description
-            arch = f.readline().strip()
+            f.readline(5_000_000)  # throw away timestamp
+            f.readline(5_000_000)  # throw away description
+            arch = f.readline(5_000_000).strip()
             if arch == get_arch():
                 return True
     except OSError:

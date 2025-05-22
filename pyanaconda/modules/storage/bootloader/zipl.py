@@ -85,7 +85,7 @@ class ZIPL(BootLoader):
             return
 
         with open(machine_id_path, "r") as fd:
-            machine_id = fd.readline().strip()
+            machine_id = fd.readline(5_000_000).strip()
 
         bls_dir = "%s%s/loader/entries/" % (conf.target.system_root, self.boot_dir)
 

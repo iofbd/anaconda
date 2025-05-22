@@ -278,7 +278,7 @@ class GRUB2(BootLoader):
         hv_type_path = "/sys/hypervisor/type"
         if self.use_bls and os.access(hv_type_path, os.F_OK):
             with open(hv_type_path, "r") as fd:
-                if fd.readline().strip() == "xen":
+                if fd.readline(5_000_000).strip() == "xen":
                     log.warning("BLS support disabled because is a Xen machine")
                     self.use_bls = False
 
@@ -341,7 +341,7 @@ class GRUB2(BootLoader):
                 return
 
             with open(machine_id_path, "r") as fd:
-                machine_id = fd.readline().strip()
+                machine_id = fd.readline(5_000_000).strip()
 
             default_entry = "%s-%s" % (machine_id, self.default.version)
             rc = util.execWithRedirect(
